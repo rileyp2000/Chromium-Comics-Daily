@@ -1,0 +1,22 @@
+{
+  "name": "chromium-comics-daily",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lambda.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rileyp2000/Chromium-Comics-Daily.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rileyp2000/Chromium-Comics-Daily/issues"
+  },
+  "homepage": "https://github.com/rileyp2000/Chromium-Comics-Daily#readme",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}

@@ -1,0 +1,9 @@
+{
+    "name": "Daily Calvin and Foxtrot",
+    "description": "Calvin and Hobbes and Foxtrot Comics with each new tab!",
+    "version": "1.0",
+    "manifest_version": 2,
+    "chrome_url_overrides" : {
+        "newtab": "comics.html"
+      }
+  }
