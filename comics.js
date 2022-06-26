@@ -1,45 +1,9 @@
-/*var d = new Date();
-
-var n = d.getDate(),
-m = d.getMonth()+ 1,
-y = d.getFullYear(),
-diff = (y - 1985)%30;
-
-y = 1985 + diff;
-
-if(n<10) n = '0' + n;
-if(m<10) m = '0' + m;
-
-var date = y+''+m+''+n;
-
-function getImageSource() {
-    var url = "http://marcel-oehler.marcellosendos.ch/comics/ch/"
-    url = url + '' + y + '/' + m + '/' + date + '.gif';
-    document.getElementById('comicImage').src = url;
-    document.getElementById('facebookShare').href = 
-    "http://www.facebook.com/sharer/sharer.php?u=" + url;
-    document.getElementById('twitterShare').href =
-    href="https://twitter.com/intent/tweet?url=" + url + 
-    "&amp;text=Calvin%20and%20Hobbes&amp;via=daily_extension";
-}
-
-function getDateHeading() {
-    document.getElementById('comicTitle').innerHTML = "Calvin and Hobbes by Bill Watterson "+n+'-'+m+'-'+y;
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    getImageSource();
-    getDateHeading();
-});
-
-*/
-
 function updateClock() {
     var now = new Date() // current date
 
     // set the content of the element with the ID time to the formatted string
-    document.getElementById("time").innerHTML = now.toLocaleTimeString('en-US',{ hour: '2-digit', minute: '2-digit' });
-    document.getElementById("date").innerHTML = now.toLocaleDateString('en-US',{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById("time").innerHTML = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById("date").innerHTML = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
     // call this function again in 1000ms
 }
@@ -53,7 +17,38 @@ async function loadComic() {
     document.getElementById("comic").src = "data:image/gif;base64," + imgBase64;
 }
 
+async function showWeather(pos) {
+    const loc = pos.coords;
+    const pointURL = `https://api.weather.gov/points/${loc.latitude},${loc.longitude}`;
+    const forecastURL = await fetch(pointURL)
+        .then(response => response.json())
+        .then(data => data.properties.forecast);
+    console.log(forecastURL);
+
+    const currentWeather = await fetch(forecastURL)
+        .then(response => response.json())
+        .then(data =>
+            data.properties.periods.filter(o => {
+                return o.number === 1;
+            })[0]
+        );
+    console.log("weather3");
+
+    document.getElementById("weather").innerHTML = `${currentWeather.temperature}°F ${currentWeather.shortForecast}`;
+}
+
+
 loadComic();
+//getLocation();
 document.addEventListener('DOMContentLoaded', (event) => {
-    setInterval(updateClock, 1000);
+    setInterval(updateClock, 2000);
+    //setInterval(getWeather, 1000);
+    if (navigator.geolocation) {
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 10000
+        };
+        navigator.geolocation.getCurrentPosition(showWeather, function () { console.log("error"); }, options);
+    }
 })
