@@ -41,7 +41,8 @@ async function showWeather(pos) {
 loadComic();
 //getLocation();
 document.addEventListener('DOMContentLoaded', (event) => {
-    setInterval(updateClock, 2000);
+    updateClock();
+    setInterval(updateClock, 1000);
     //setInterval(getWeather, 1000);
     if (navigator.geolocation) {
         const options = {
